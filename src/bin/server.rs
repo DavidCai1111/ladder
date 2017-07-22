@@ -19,7 +19,8 @@ struct CargoConfig {
 }
 
 fn main() {
-  let cargoTomlPath = &(String::from(env::current_dir().unwrap().to_str().unwrap()) + "Cargo.toml");
+  let cargoTomlPath =
+    &(String::from(env::current_dir().unwrap().to_str().unwrap()) + "/Cargo.toml");
 
   let cargoConfig: CargoConfig =
     toml::from_str(&read_file_content(cargoTomlPath).unwrap()).unwrap();

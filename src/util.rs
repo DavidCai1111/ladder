@@ -9,3 +9,17 @@ pub fn read_file_content(filename: &str) -> ioResult<String> {
 
   Ok(file_content)
 }
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+  use std::env;
+
+  #[test]
+  fn test_read_file_content() {
+    let cargoTomlPath =
+      &(String::from(env::current_dir().unwrap().to_str().unwrap()) + "/Cargo.toml");
+
+    assert!(read_file_content(cargoTomlPath).unwrap().contains("ladder"));
+  }
+}
