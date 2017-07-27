@@ -2,7 +2,7 @@ use std::error::Error;
 use serde_json;
 use util::read_file_content;
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Config {
   local_addr: Option<String>,
   server_addr: Option<String>,
@@ -31,4 +31,23 @@ pub fn parse(filename: &str) -> Result<Config, Box<Error>> {
   }
 
   Ok(config)
+}
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+  use std::env;
+
+  #[test]
+  fn test_parse() {
+    let configPath =
+      &(String::from(env::current_dir().unwrap().to_str().unwrap()) + "/test/config.json");
+    let config: Config = parse(configPath).unwrap();
+
+    assert_eq!(config.local_addr, Some(String::from("0.0.0.0:6010")));
+    assert_eq!(config.server_addr, Some(String::from("0.0.0.0:8089")));
+    assert_eq!(config.password, Some(String::from("ladder-password")));
+    assert_eq!(config.method, Some(String::from("aes-128-cfb")));
+    assert_eq!(config.timeout, Some(300));
+  }
 }
