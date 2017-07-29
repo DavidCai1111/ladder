@@ -9,6 +9,7 @@ use std::fs::File;
 use std::env;
 use clap::App;
 use ladder::util::read_file_content;
+use ladder::config;
 
 const idType: i32 = 0;
 const idIP0: i32 = 1;
@@ -35,11 +36,13 @@ struct CargoConfig {
 }
 
 fn main() {
-    let cargoTomlPath = &(String::from(env::current_dir().unwrap().to_str().unwrap()) +
-                          "/Cargo.toml");
+    let current_dir_string = String::from(env::current_dir().unwrap().to_str().unwrap());
 
-    let cargoConfig: CargoConfig = toml::from_str(&read_file_content(cargoTomlPath).unwrap())
-        .unwrap();
+    let cargoConfig: CargoConfig =
+        toml::from_str(&read_file_content(&(current_dir_string.clone() + "/Cargo.toml")).unwrap())
+            .unwrap();
+
+    let ladderConfig = config::parse(&(current_dir_string + "/config.json")).unwrap();
 
     App::new(cargoConfig.name.as_str())
         .version(cargoConfig.version.as_str())
