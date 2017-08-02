@@ -5,6 +5,7 @@
 extern crate serde_derive;
 extern crate serde_json;
 extern crate crypto;
+extern crate bytes;
 
 pub mod util;
 pub mod config;

@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::{Result as ioResult, Read};
 use crypto::md5;
 use crypto::digest::Digest;
+use bytes::Bytes;
 
 pub fn read_file_content(filename: &str) -> ioResult<String> {
     let mut file = File::open(filename)?;
@@ -12,10 +13,10 @@ pub fn read_file_content(filename: &str) -> ioResult<String> {
     Ok(file_content)
 }
 
-pub fn md5_sum(bytes: &[u8]) -> String {
+pub fn md5_sum(bytes: &Bytes) -> Bytes {
     let mut hash = md5::Md5::new();
     hash.input(bytes);
-    hash.result_str()
+    Bytes::from(hash.result_str())
 }
 
 #[cfg(test)]
@@ -34,7 +35,7 @@ mod tests {
 
     #[test]
     fn test_md5_sum() {
-        let result = md5_sum(String::from("test").as_bytes());
+        let result = md5_sum(&Bytes::from("test"));
 
         assert_eq!(result, String::from("098f6bcd4621d373cade4e832627b4f6"));
     }
