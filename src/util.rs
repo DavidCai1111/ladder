@@ -25,7 +25,7 @@ pub fn generate_key(password: &str, key_len: usize) -> Bytes {
     // TODO: optimize generate_key()
     let count = (key_len as f64 / MD5_LEN as f64).ceil() as usize;
 
-    md5_sum(&Bytes::from(password));
+    md5_sum(&Bytes::from(password))
 }
 
 #[cfg(test)]
