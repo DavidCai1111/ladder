@@ -4,6 +4,8 @@ use crypto::md5;
 use crypto::digest::Digest;
 use bytes::Bytes;
 
+const MD5_LEN: usize = 16;
+
 pub fn read_file_content(filename: &str) -> ioResult<String> {
     let mut file = File::open(filename)?;
     let mut file_content = String::new();
@@ -17,6 +19,13 @@ pub fn md5_sum(bytes: &Bytes) -> Bytes {
     let mut hash = md5::Md5::new();
     hash.input(bytes);
     Bytes::from(hash.result_str())
+}
+
+pub fn generate_key(password: &str, key_len: usize) -> Bytes {
+    // TODO: optimize generate_key()
+    let count = (key_len as f64 / MD5_LEN as f64).ceil() as usize;
+
+    md5_sum(&Bytes::from(password));
 }
 
 #[cfg(test)]
