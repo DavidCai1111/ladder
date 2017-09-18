@@ -5,7 +5,7 @@ name = "ladder"
 version = "0.0.1"
 
 [dependencies]
-bytes = "0.4.4"
+bytes = "0.4.5"
 clap = "~2.19.0"
 rust-crypto = "^0.2"
 serde = "1.0.10"
