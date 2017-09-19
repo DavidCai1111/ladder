@@ -4,11 +4,11 @@ use util::read_file_content;
 
 #[derive(Deserialize, Debug)]
 pub struct Config {
-    local_addr: String,
-    server_addr: String,
-    password: String,
-    method: String,
-    timeout: u32,
+    pub local_addr: String,
+    pub server_addr: String,
+    pub password: String,
+    pub method: String,
+    pub timeout: u32,
 }
 
 pub fn parse(filename: &str) -> Result<Config, Box<Error>> {

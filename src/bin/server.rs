@@ -8,24 +8,7 @@ extern crate toml;
 use std::fs::File;
 use std::env;
 use clap::App;
-use ladder::util::read_file_content;
-use ladder::config;
-
-const idType: i32 = 0;
-const idIP0: i32 = 1;
-const idDmLen: i32 = 1;
-const idDm0: i32 = 2;
-
-const typeIPv4: i32 = 1;
-const typeDm: i32 = 3;
-const typeIPv6: i32 = 4;
-
-const lenIPv4: usize = 6;
-const lenIPv6: usize = 18;
-const lenDmBase: usize = 2;
-const lenHmacSha1: usize = 10;
-
-const addrMask: u8 = 0xf;
+use ladder::{config, server, util};
 
 #[derive(Debug, Deserialize)]
 struct CargoConfig {
@@ -43,7 +26,7 @@ struct CargoConfigPackage {
 fn main() {
     let current_dir_string = String::from(env::current_dir().unwrap().to_str().unwrap());
 
-    let cargoConfig: CargoConfig = toml::from_str(&read_file_content(
+    let cargoConfig: CargoConfig = toml::from_str(&util::read_file_content(
         &(current_dir_string.clone() + "/Cargo.toml"),
     ).unwrap())
         .unwrap();
@@ -61,5 +44,5 @@ fn main() {
 
     let config = matches.value_of("config").unwrap_or("/test/config.json");
 
-    let ladderConfig = config::parse(&(current_dir_string + config)).unwrap();
+    server::run_server(&config::parse(&(current_dir_string + config)).unwrap());
 }
