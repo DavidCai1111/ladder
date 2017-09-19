@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{Result as ioResult, Read};
+use std::io::{Read, Result as ioResult};
 use crypto::md5;
 use crypto::digest::Digest;
 use bytes::Bytes;
@@ -40,8 +40,8 @@ mod tests {
 
     #[test]
     fn test_read_file_content() {
-        let cargoTomlPath = &(String::from(env::current_dir().unwrap().to_str().unwrap()) +
-                              "/Cargo.toml");
+        let cargoTomlPath =
+            &(String::from(env::current_dir().unwrap().to_str().unwrap()) + "/Cargo.toml");
 
         assert!(read_file_content(cargoTomlPath).unwrap().contains("ladder"));
     }
@@ -61,7 +61,9 @@ mod tests {
 
     #[test]
     fn test_generate_key_32() {
-        let mut sum = String::from("5d41402abc4b2a76b9719d911017c5925d41402abc4b2a76b9719d911017c592");
+        let mut sum = String::from(
+            "5d41402abc4b2a76b9719d911017c5925d41402abc4b2a76b9719d911017c592",
+        );
         assert_eq!(generate_key("hello", 64), sum);
     }
 }

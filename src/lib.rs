@@ -1,11 +1,11 @@
 #![crate_type = "lib"]
 #![crate_name = "ladder"]
 
+extern crate bytes;
+extern crate crypto;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
-extern crate crypto;
-extern crate bytes;
 
 pub mod util;
 pub mod config;
