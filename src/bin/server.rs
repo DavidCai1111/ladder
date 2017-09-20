@@ -1,11 +1,9 @@
 extern crate clap;
 extern crate ladder;
-extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate toml;
 
-use std::fs::File;
 use std::env;
 use clap::App;
 use ladder::{config, server, util};
@@ -26,14 +24,14 @@ struct CargoConfigPackage {
 fn main() {
     let current_dir_string = String::from(env::current_dir().unwrap().to_str().unwrap());
 
-    let cargoConfig: CargoConfig = toml::from_str(&util::read_file_content(
+    let cargo_config: CargoConfig = toml::from_str(&util::read_file_content(
         &(current_dir_string.clone() + "/Cargo.toml"),
     ).unwrap())
         .unwrap();
 
-    let matches = App::new(cargoConfig.package.name.as_str())
-        .version(cargoConfig.package.version.as_str())
-        .about(cargoConfig.package.description.as_str())
+    let matches = App::new(cargo_config.package.name.as_str())
+        .version(cargo_config.package.version.as_str())
+        .about(cargo_config.package.description.as_str())
         .arg(
             clap::Arg::with_name("config")
                 .short("c")
